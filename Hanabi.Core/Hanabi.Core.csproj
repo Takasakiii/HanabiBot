@@ -17,4 +17,8 @@
       <PackageReference Include="TakasakiStudio.Lina" Version="1.2.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\Validations\" />
+    </ItemGroup>
+
 </Project>

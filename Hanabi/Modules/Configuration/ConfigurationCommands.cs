@@ -30,4 +30,20 @@ public class ConfigurationCommands : InteractionModuleBase
 
         await RespondAsync(embed: embed, components: controls, ephemeral: true);
     }
+
+    [SlashCommand("starboard", "Configura o modulo de starboard")]
+    public async Task ConfigureStarboard()
+    {
+        var embed = _embedService.GenerateEmbed()
+            .WithTitle("Configure Starboard")
+            .WithDescription("Use os botões abaixo para configurar o modulo da Starboard")
+            .Build();
+
+        var controls = new ComponentBuilder()
+            .WithButton("Canal da Starboard", "config_starboard_channel")
+            .WithButton("Quantidade de estrelas", "config_starboard_min_stars")
+            .Build();
+
+        await RespondAsync(embed: embed, components: controls, ephemeral: true);
+    }
 }

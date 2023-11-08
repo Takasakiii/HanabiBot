@@ -19,7 +19,6 @@ public class ServerConfigurationService : IServerConfigurationService
     public async Task<ServerConfigurationViewModel> EditConfig(ServerConfigurationViewModel configs)
     {
         ServerConfiguration configModel = configs;
-        await configModel.Validate();
         
         var transaction = await _configurationRepository.BeginTransaction();
         if (await _configurationRepository.GetById(configs.GuildId) is { } currentSettings)

@@ -6,4 +6,5 @@ public interface IEmbedService
 {
     EmbedBuilder GenerateEmbed();
     Embed GenerateSuccessEmbed(string message);
+    Embed GenerateErrorEmbed(string message);
 }

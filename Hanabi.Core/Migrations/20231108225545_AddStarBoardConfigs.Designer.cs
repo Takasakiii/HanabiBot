@@ -3,6 +3,7 @@ using System;
 using Lina.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hanabi.Core.Migrations
 {
     [DbContext(typeof(LinaDbContext))]
-    partial class LinaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231108225545_AddStarBoardConfigs")]
+    partial class AddStarBoardConfigs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

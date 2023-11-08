@@ -27,7 +27,7 @@ public class LogsConfigInteractions : InteractionModuleBase<SocketInteractionCon
             .WithTitle("Editar canal de logs")
             .WithDescription("Selecione o novo canal para enviar os logs");
 
-        if (currentConfig is not null)
+        if (currentConfig?.LogsChatId is not null)
         {
             embed = embed.AddField("Canal atualmente selecionado:", $"<#{currentConfig.LogsChatId}>");
         }
@@ -50,7 +50,12 @@ public class LogsConfigInteractions : InteractionModuleBase<SocketInteractionCon
     public async Task EditLogChannelSelect(IChannel[] selectedChannels)
     {
         var channel = selectedChannels[0];
-        await _serverConfigurationService.EditConfig(new ServerConfigurationViewModel(Context.Guild.Id, channel.Id));
+        var config = await _serverConfigurationService.GetServerConfig(Context.Guild.Id) ??
+                     new ServerConfigurationViewModel(Context.Guild.Id);
+
+        config.LogsChatId = channel.Id;
+            
+        await _serverConfigurationService.EditConfig(config);
 
         var embed = _embedService.GenerateSuccessEmbed("Configuração do canal de logs salva com sucesso");
         await RespondAsync(embed: embed, ephemeral: true);

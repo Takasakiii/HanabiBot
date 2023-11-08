@@ -31,4 +31,13 @@ public class EmbedService : IEmbedService
             .WithDescription($"\u2705 {message}")
             .Build();
     }
+    
+    public Embed GenerateErrorEmbed(string message)
+    {
+        return GenerateEmbed()
+            .WithColor(Color.Red)
+            .WithTitle("Erro")
+            .WithDescription($"\u2757 {message}")
+            .Build();
+    }
 }
