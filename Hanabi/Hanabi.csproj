@@ -12,6 +12,10 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Include="..\config.json">
+        <Link>config.json</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -27,7 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Modules\Configuration\" />
       <Folder Include="Modules\Logs\" />
     </ItemGroup>
 

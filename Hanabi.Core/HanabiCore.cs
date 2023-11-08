@@ -1,4 +1,5 @@
 using Hanabi.Core.Services.Interfaces;
+using Lina.AutoDependencyInjection;
 using Lina.Database;
 using Lina.LoaderConfig;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +18,12 @@ public static class HanabiCore
             .UseMySql(config.DatabaseConnectionString, ServerVersion.AutoDetect(config.DatabaseConnectionString),
                 configMysql => configMysql
                     .MigrationsAssembly(assembly)));
+        di.AddAutoDependencyInjection<IHanabiConfig>();
+    }
+
+    public static async ValueTask MigrateDatabase(this IServiceProvider provider)
+    {
+        var dbContext = provider.GetRequiredService<DbContext>();
+        await dbContext.Database.MigrateAsync();
     }
 }
