@@ -9,7 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 var discordClientConfig = new DiscordSocketConfig
 {
-    GatewayIntents = GatewayIntents.All
+    GatewayIntents = GatewayIntents.All,
+    MessageCacheSize = 200
 };
 
 var discordClient = new DiscordSocketClient(discordClientConfig);

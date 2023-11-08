@@ -31,10 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Modules\Logs\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Hanabi.Core\Hanabi.Core.csproj" />
     </ItemGroup>
 
