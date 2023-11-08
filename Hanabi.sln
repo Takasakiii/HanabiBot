@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hanabi", "Hanabi\Hanabi.csproj", "{B1E05751-E6A5-44BE-8DDC-68351EBDF8DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hanabi.Core", "Hanabi.Core\Hanabi.Core.csproj", "{EC7A3C75-5423-46C6-BD44-288AFB4A2FAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hanabi.Core", "Hanabi.Core\Hanabi.Core.csproj", "{D8BA3826-B29D-43FF-8A5C-7AB0E379338C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{B1E05751-E6A5-44BE-8DDC-68351EBDF8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1E05751-E6A5-44BE-8DDC-68351EBDF8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1E05751-E6A5-44BE-8DDC-68351EBDF8DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC7A3C75-5423-46C6-BD44-288AFB4A2FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC7A3C75-5423-46C6-BD44-288AFB4A2FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC7A3C75-5423-46C6-BD44-288AFB4A2FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC7A3C75-5423-46C6-BD44-288AFB4A2FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BA3826-B29D-43FF-8A5C-7AB0E379338C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BA3826-B29D-43FF-8A5C-7AB0E379338C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BA3826-B29D-43FF-8A5C-7AB0E379338C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BA3826-B29D-43FF-8A5C-7AB0E379338C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

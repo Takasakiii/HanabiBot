@@ -18,8 +18,8 @@ var interactionService = new InteractionService(discordClient.Rest);
 var diSetup = new ServiceCollection();
 diSetup.AddSingleton(discordClient);
 diSetup.AddSingleton(interactionService);
-diSetup.AddHanabiCore();
 diSetup.AddAutoDependencyInjection<Program>();
+diSetup.AddHanabiCore();
 
 var di = diSetup.BuildServiceProvider();
 
