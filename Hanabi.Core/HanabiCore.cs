@@ -13,6 +13,9 @@ public static class HanabiCore
     public static void AddHanabiCore(this IServiceCollection di)
     {
         var config = di.AddLoaderConfig<IHanabiConfig>();
+
+        Console.WriteLine(config.DatabaseConnectionString);
+        
         di.AddLogging(builder => builder.AddConsole());
         di.AddLinaDbContext<IHanabiConfig>((options, assembly) => options
             .UseMySql(config.DatabaseConnectionString, ServerVersion.AutoDetect(config.DatabaseConnectionString),

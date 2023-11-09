@@ -1,0 +1,31 @@
+﻿version: "3"
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      DISCORDBOTTOKEN: ${DISCORDBOTTOKEN}
+      DISCORDPARADOXUMGUILDID: ${DISCORDPARADOXUMGUILDID}
+      DATABASECONNECTIONSTRING: Server=database;Database=hanabi;User Id=root;Password=${DATABASE_PASSWORD};
+      
+  database:
+    image: mariadb:10.11.5
+    restart: always
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "--silent" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mariadb:

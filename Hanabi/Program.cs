@@ -26,6 +26,7 @@ var di = diSetup.BuildServiceProvider();
 
 await interactionService.AddModulesAsync(typeof(Program).Assembly, di);
 var discordToken = di.GetRequiredService<IHanabiConfig>().DiscordBotToken;
+
 di.GetRequiredService<IAutoLoadEventsService>().Initialize();
 await di.MigrateDatabase();
 await discordClient.LoginAsync(TokenType.Bot, discordToken);

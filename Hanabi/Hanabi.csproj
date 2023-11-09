@@ -14,7 +14,6 @@
       </Content>
       <Content Include="..\config.json">
         <Link>config.json</Link>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
 
