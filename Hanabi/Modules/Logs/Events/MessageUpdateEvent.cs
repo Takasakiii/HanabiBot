@@ -31,6 +31,8 @@ public class MessageUpdateEvent : IAutoLoaderEvent
     {
         client.MessageUpdated += async (cacheable, message, channel) =>
         {
+            var oldMessage = await cacheable.GetOrDownloadAsync();
+            
             if (channel is not SocketGuildChannel socketChannel)
             {
                 _logger.LogInformation("Message {} is not a guild message, skip", message.Id);
@@ -58,7 +60,7 @@ public class MessageUpdateEvent : IAutoLoaderEvent
                 .WithColor(Color.Gold)
                 .WithDescription($"Uma mensagem no canal <#{channel.Id}>")
                 .WithAuthor(message.Author.Username, message.Author.GetSafeAvatarUrl())
-                .AddField("Antigo conteudo", cacheable.HasValue ? cacheable.Value.Content.CutTheEnd(1024) : "Valor antigo indisponivel")
+                .AddField("Antigo conteudo", oldMessage?.Content.CutTheEnd(1024) ?? "Valor antigo indisponivel")
                 .AddField("Novo conteudo", message.Content.CutTheEnd(1024))
                 .Build();
 

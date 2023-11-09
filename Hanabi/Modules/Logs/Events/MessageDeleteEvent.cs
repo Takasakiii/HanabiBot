@@ -29,9 +29,12 @@ public class MessageDeleteEvent : IAutoLoaderEvent
 
     public void RunEvent(DiscordSocketClient client)
     {
-        client.MessageDeleted += async (message, channel) =>
+        client.MessageDeleted += async (cachedMessage, cachedChannel) =>
         {
-            if (!channel.HasValue || channel.Value is not SocketGuildChannel socketChannel)
+            var channel = await cachedChannel.GetOrDownloadAsync();
+            var message = await cachedMessage.GetOrDownloadAsync();
+            
+            if (channel is not SocketGuildChannel socketChannel)
             {
                 _logger.LogInformation("Message {} is not a guild message, skip", message.Id);
                 return;
@@ -51,17 +54,16 @@ public class MessageDeleteEvent : IAutoLoaderEvent
                 _logger.LogWarning("Log channel from guild {} is not a textchannel", socketChannel.Guild.Id);
                 return;
             }
-
-            var messageWithOutCache = message.HasValue ? message.Value : null;
+            
 
             var embed = _embedService.GenerateEmbed()
                 .WithTitle("Mensagem Deletada")
-                .WithUrl(messageWithOutCache?.GetJumpUrl())
+                .WithUrl(message?.GetJumpUrl())
                 .WithColor(Color.Red)
                 .WithDescription($"Uma mensagem no canal <#{channel.Id}>")
-                .WithAuthor(messageWithOutCache?.Author.Username, messageWithOutCache?.Author.GetSafeAvatarUrl())
+                .WithAuthor(message?.Author.Username, message?.Author.GetSafeAvatarUrl())
                 .AddField("Antigo conteudo",
-                    messageWithOutCache?.Content.CutTheEnd(1024) ?? "Valor antigo indisponivel")
+                    message?.Content.CutTheEnd(1024) ?? "Valor antigo indisponivel")
                 .Build();
 
             await logTextChannel.SendMessageAsync(embed: embed);
