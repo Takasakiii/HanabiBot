@@ -7,19 +7,12 @@ namespace Hanabi.Modules.Configuration;
 [Group("config", "Configura as ações da Hanabi no Server")]
 [EnabledInDm(false)]
 [DefaultMemberPermissions(GuildPermission.Administrator)]
-public class ConfigurationCommands : InteractionModuleBase
+public class ConfigurationCommands(IEmbedService embedService) : InteractionModuleBase
 {
-    private readonly IEmbedService _embedService;
-
-    public ConfigurationCommands(IEmbedService embedService)
-    {
-        _embedService = embedService;
-    }
-
     [SlashCommand("logs", "Configura o modulo de logs")]
     public async Task ConfigureLogs()
     { 
-        var embed = _embedService.GenerateEmbed()
+        var embed = embedService.GenerateEmbed()
             .WithTitle("Configurações de Logs")
             .WithDescription("Use os botões abaixo para configurar o modulo de logs")
             .Build();
@@ -34,7 +27,7 @@ public class ConfigurationCommands : InteractionModuleBase
     [SlashCommand("starboard", "Configura o modulo de starboard")]
     public async Task ConfigureStarboard()
     {
-        var embed = _embedService.GenerateEmbed()
+        var embed = embedService.GenerateEmbed()
             .WithTitle("Configure Starboard")
             .WithDescription("Use os botões abaixo para configurar o modulo da Starboard")
             .Build();

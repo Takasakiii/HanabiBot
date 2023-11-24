@@ -2,29 +2,21 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Hanabi.Abstracts;
 using Hanabi.Services.Interfaces;
-using Lina.AutoDependencyInjection;
-using Lina.AutoDependencyInjection.Attributes;
+using TakasakiStudio.Lina.AutoDependencyInjection;
+using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
 
 namespace Hanabi.GlobalEvents;
 
-[Dependency(LifeTime.Transient, typeof(IAutoLoaderEvent))]
-public class InteractionsHandlerLogsEvent : IAutoLoaderEvent
+[Dependency<IAutoLoaderEvent>(LifeTime.Transient)]
+public class InteractionsHandlerLogsEvent(InteractionService interactionService, ILogService logService)
+    : IAutoLoaderEvent
 {
-    private readonly InteractionService _interactionService;
-    private readonly ILogService _logService;
-
-    public InteractionsHandlerLogsEvent(InteractionService interactionService, ILogService logService)
-    {
-        _interactionService = interactionService;
-        _logService = logService;
-    }
-
     public void RunEvent(DiscordSocketClient client)
     {
-        _interactionService.Log += async message =>
+        interactionService.Log += message =>
         {
-            _logService.DiscordLogWriter(message);
-            await Task.CompletedTask;
+            logService.DiscordLogWriter(message);
+            return Task.CompletedTask;
         };
     }
 }

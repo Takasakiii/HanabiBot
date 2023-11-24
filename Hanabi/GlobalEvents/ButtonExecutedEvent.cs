@@ -1,12 +1,12 @@
 using Discord.Interactions;
 using Discord.WebSocket;
 using Hanabi.Abstracts;
-using Lina.AutoDependencyInjection;
-using Lina.AutoDependencyInjection.Attributes;
+using TakasakiStudio.Lina.AutoDependencyInjection;
+using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
 
 namespace Hanabi.GlobalEvents;
 
-[Dependency(LifeTime.Transient, typeof(IAutoLoaderEvent))]
+[Dependency<IAutoLoaderEvent>(LifeTime.Transient)]
 public class ButtonExecutedEvent : IAutoLoaderEvent
 {
     private readonly IServiceProvider _serviceProvider;

@@ -1,5 +1,5 @@
 using Hanabi.Core.ViewModels;
-using Lina.Database.Models;
+using TakasakiStudio.Lina.Database.Models;
 
 namespace Hanabi.Core.Models;
 

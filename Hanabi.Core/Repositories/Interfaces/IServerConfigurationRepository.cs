@@ -1,5 +1,5 @@
 using Hanabi.Core.Models;
-using Lina.Database.Interfaces;
+using TakasakiStudio.Lina.Database.Interfaces;
 
 namespace Hanabi.Core.Repositories.Interfaces;
 

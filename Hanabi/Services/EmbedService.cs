@@ -1,25 +1,18 @@
 using Discord;
 using Discord.WebSocket;
 using Hanabi.Services.Interfaces;
-using Lina.AutoDependencyInjection.Attributes;
+using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
 
 namespace Hanabi.Services;
 
-[Service(typeof(IEmbedService))]
-public class EmbedService : IEmbedService
+[Service<IEmbedService>]
+public class EmbedService(DiscordSocketClient client) : IEmbedService
 {
-    private readonly DiscordSocketClient _client;
-
-    public EmbedService(DiscordSocketClient client)
-    {
-        _client = client;
-    }
-
     public EmbedBuilder GenerateEmbed()
     {
         return new EmbedBuilder()
             .WithColor(Color.DarkPurple)
-            .WithFooter(_client.CurrentUser.Username, _client.CurrentUser.GetAvatarUrl())
+            .WithFooter(client.CurrentUser.Username, client.CurrentUser.GetAvatarUrl())
             .WithTimestamp(DateTimeOffset.Now);
     }
 

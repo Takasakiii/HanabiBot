@@ -4,29 +4,19 @@ using Hanabi.Abstracts;
 using Hanabi.Core.Services.Interfaces;
 using Hanabi.Extensions;
 using Hanabi.Services.Interfaces;
-using Lina.AutoDependencyInjection;
-using Lina.AutoDependencyInjection.Attributes;
 using Microsoft.Extensions.Logging;
+using TakasakiStudio.Lina.AutoDependencyInjection;
+using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
 
 namespace Hanabi.Modules.Starboard.Events;
 
-[Dependency(LifeTime.Transient, typeof(IAutoLoaderEvent))]
-public class ReactionAddedEvent : IAutoLoaderEvent
+[Dependency<IAutoLoaderEvent>(LifeTime.Transient)]
+public class ReactionAddedEvent(
+    IServerConfigurationService serverConfigurationService,
+    ILogger<ReactionAddedEvent> logger,
+    IEmbedService embedService)
+    : IAutoLoaderEvent
 {
-    private readonly IServerConfigurationService _serverConfigurationService;
-    private readonly ILogger<ReactionAddedEvent> _logger;
-    private readonly IEmbedService _embedService;
-
-    public ReactionAddedEvent(
-        IServerConfigurationService serverConfigurationService,
-        ILogger<ReactionAddedEvent> logger,
-        IEmbedService embedService)
-    {
-        _serverConfigurationService = serverConfigurationService;
-        _logger = logger;
-        _embedService = embedService;
-    }
-
     public void RunEvent(DiscordSocketClient client)
     {
         client.ReactionAdded += async (cachedMessage, cachedChannel, reaction) =>
@@ -47,11 +37,11 @@ public class ReactionAddedEvent : IAutoLoaderEvent
             if(channel is not SocketTextChannel socketTextChannel)
                 return;
 
-            var configs = await _serverConfigurationService.GetServerConfig(socketTextChannel.Guild.Id);
+            var configs = await serverConfigurationService.GetServerConfig(socketTextChannel.Guild.Id);
 
             if (configs?.StarBoardChannel is null || configs.StarBoardMinimalStars is null)
             {
-                _logger.LogInformation("Possible malformed starboard in guild {}", socketTextChannel.Guild.Id);
+                logger.LogInformation("Possible malformed starboard in guild {}", socketTextChannel.Guild.Id);
                 return;
             }
             
@@ -65,13 +55,13 @@ public class ReactionAddedEvent : IAutoLoaderEvent
 
             if (starboardChannel is not ITextChannel starboardTextChannel)
             {
-                _logger.LogWarning("Starboard channel does not exist in guild {}", socketTextChannel.Guild.Id);
+                logger.LogWarning("Starboard channel does not exist in guild {}", socketTextChannel.Guild.Id);
                 return;
             }
 
             var mainAttachment = message.Attachments.FirstOrDefault();
 
-            var embed = _embedService.GenerateEmbed()
+            var embed = embedService.GenerateEmbed()
                 .WithAuthor(message.Author.GlobalName ?? message.Author.Username,
                     message.Author.GetSafeAvatarUrl())
                 .WithColor(Color.Gold)

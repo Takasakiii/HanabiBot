@@ -8,23 +8,17 @@ using Hanabi.Services.Interfaces;
 
 namespace Hanabi.Modules.Configuration.Interactions;
 
-public class StarboardConfigInteractions : InteractionModuleBase<SocketInteractionContext<SocketMessageComponent>>
+public class StarboardConfigInteractions(
+    IEmbedService embedService,
+    IServerConfigurationService serverConfigurationService)
+    : InteractionModuleBase<SocketInteractionContext<SocketMessageComponent>>
 {
-    private readonly IEmbedService _embedService;
-    private readonly IServerConfigurationService _serverConfigurationService;
-
-    public StarboardConfigInteractions(IEmbedService embedService, IServerConfigurationService serverConfigurationService)
-    {
-        _embedService = embedService;
-        _serverConfigurationService = serverConfigurationService;
-    }
-
     [ComponentInteraction("config_starboard_channel")]
     public async Task ConfigStarboardChannel()
     {
-        var currentConfig = await _serverConfigurationService.GetServerConfig(Context.Guild.Id);
+        var currentConfig = await serverConfigurationService.GetServerConfig(Context.Guild.Id);
 
-        var embed = _embedService.GenerateEmbed()
+        var embed = embedService.GenerateEmbed()
             .WithTitle("Editar canal da Starboard")
             .WithDescription("Selecione o novo canal para enviar as perolas");
 
@@ -51,23 +45,23 @@ public class StarboardConfigInteractions : InteractionModuleBase<SocketInteracti
     public async Task EditStarboardChannelSelect(IChannel[] selectedChannels)
     {
         var channel = selectedChannels[0];
-        var config = await _serverConfigurationService.GetServerConfig(Context.Guild.Id) ??
+        var config = await serverConfigurationService.GetServerConfig(Context.Guild.Id) ??
                      new ServerConfigurationViewModel(Context.Guild.Id);
 
         config.StarBoardChannel = channel.Id;
             
-        await _serverConfigurationService.EditConfig(config);
+        await serverConfigurationService.EditConfig(config);
 
-        var embed = _embedService.GenerateSuccessEmbed("Configuração do canal da starboard salva com sucesso");
+        var embed = embedService.GenerateSuccessEmbed("Configuração do canal da starboard salva com sucesso");
         await RespondAsync(embed: embed, ephemeral: true);
     }
     
     [ComponentInteraction("config_starboard_min_stars")]
     public async Task ConfigStarboardMinStar()
     {
-        var currentConfig = await _serverConfigurationService.GetServerConfig(Context.Guild.Id);
+        var currentConfig = await serverConfigurationService.GetServerConfig(Context.Guild.Id);
 
-        var embed = _embedService.GenerateEmbed()
+        var embed = embedService.GenerateEmbed()
             .WithTitle("Editar estrelas necessarias para starboard")
             .WithDescription("Defina a nova quantidade de estrelas necessarias para enviar uma perola");
 

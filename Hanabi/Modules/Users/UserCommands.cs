@@ -7,15 +7,8 @@ namespace Hanabi.Modules.Users;
 
 [Group("user", "Comandos utils para usuarios")]
 [EnabledInDm(false)]
-public class UserCommands : InteractionModuleBase
+public class UserCommands(IEmbedService embedService) : InteractionModuleBase
 {
-    private readonly IEmbedService _embedService;
-
-    public UserCommands(IEmbedService embedService)
-    {
-        _embedService = embedService;
-    }
-
     [SlashCommand("avatar", "Obtem o avatar de um usuario")]
     public async Task GetAvatar(
         [Summary("usuario",
@@ -36,7 +29,7 @@ public class UserCommands : InteractionModuleBase
     {
         var name = user.GlobalName ?? user.Username;
 
-        var embed = _embedService.GenerateEmbed()
+        var embed = embedService.GenerateEmbed()
             .WithTitle($"Avatar de {name}")
             .WithImageUrl(user.GetSafeAvatarUrl(1024))
             .Build();

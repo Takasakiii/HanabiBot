@@ -1,10 +1,10 @@
 using Hanabi.Core.Services.Interfaces;
-using Lina.AutoDependencyInjection;
-using Lina.Database;
-using Lina.LoaderConfig;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TakasakiStudio.Lina.AutoDependencyInjection;
+using TakasakiStudio.Lina.Database;
+using TakasakiStudio.Lina.Utils.LoaderConfig;
 
 namespace Hanabi.Core;
 

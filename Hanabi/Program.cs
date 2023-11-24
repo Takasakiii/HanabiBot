@@ -4,8 +4,8 @@ using Discord.WebSocket;
 using Hanabi.Core;
 using Hanabi.Core.Services.Interfaces;
 using Hanabi.Services.Interfaces;
-using Lina.AutoDependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using TakasakiStudio.Lina.AutoDependencyInjection;
 
 var discordClientConfig = new DiscordSocketConfig
 {

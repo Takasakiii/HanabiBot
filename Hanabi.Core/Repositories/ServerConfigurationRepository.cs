@@ -1,15 +1,11 @@
 using Hanabi.Core.Models;
 using Hanabi.Core.Repositories.Interfaces;
-using Lina.AutoDependencyInjection.Attributes;
-using Lina.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
+using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
+using TakasakiStudio.Lina.Database.Repositories;
 
 namespace Hanabi.Core.Repositories;
 
-[Repository(typeof(IServerConfigurationRepository))]
-public class ServerConfigurationRepository : BaseRepository<ServerConfiguration, ulong>, IServerConfigurationRepository
-{
-    public ServerConfigurationRepository(DbContext dbContext) : base(dbContext)
-    {
-    }
-}
+[Repository<IServerConfigurationRepository>]
+public class ServerConfigurationRepository(DbContext dbContext)
+    : BaseRepository<ServerConfiguration, ulong>(dbContext), IServerConfigurationRepository;

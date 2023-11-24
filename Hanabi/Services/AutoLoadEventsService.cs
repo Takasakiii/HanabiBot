@@ -1,37 +1,27 @@
 using Discord.WebSocket;
 using Hanabi.Abstracts;
 using Hanabi.Services.Interfaces;
-using Lina.AutoDependencyInjection.Attributes;
 using Microsoft.Extensions.Logging;
+using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
 
 namespace Hanabi.Services;
 
-[Service(typeof(IAutoLoadEventsService))]
-public class AutoLoadEventsService : IAutoLoadEventsService
+[Service<IAutoLoadEventsService>]
+public class AutoLoadEventsService(
+    IEnumerable<IAutoLoaderEvent> events,
+    DiscordSocketClient client,
+    ILogger<AutoLoadEventsService> logger)
+    : IAutoLoadEventsService
 {
-    private readonly IEnumerable<IAutoLoaderEvent> _events;
-    private readonly DiscordSocketClient _client;
-    private readonly ILogger<AutoLoadEventsService> _logger;
-
-    public AutoLoadEventsService(
-        IEnumerable<IAutoLoaderEvent> events,
-        DiscordSocketClient client,
-        ILogger<AutoLoadEventsService> logger)
-    {
-        _events = events;
-        _client = client;
-        _logger = logger;
-    }
-
     public void Initialize()
     {
         var count = 0;
-        foreach (var @event in _events)
+        foreach (var @event in events)
         {
-            @event.RunEvent(_client);
+            @event.RunEvent(client);
             count++;
         }
         
-        _logger.LogInformation("Loaded {} events", count);
+        logger.LogInformation("Loaded {} events", count);
     }
 }
