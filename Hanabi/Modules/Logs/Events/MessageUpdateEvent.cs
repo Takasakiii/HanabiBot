@@ -43,6 +43,9 @@ public class MessageUpdateEvent(
                 logger.LogWarning("Log channel from guild {} is not a textchannel", socketChannel.Guild.Id);
                 return;
             }
+            
+            if(oldMessage?.Content == message.Content)
+                return;
 
             var embed = embedService.GenerateEmbed()
                 .WithTitle("Mensagem Alterada")
